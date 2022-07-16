@@ -36,7 +36,7 @@ export default function AdminPage() {
         <div className="flex-1">
           <PageHeading crumbs={[
             { label: 'Pages', path: '/pages' },
-            { label: 'New Page', path: '/pages/new' }
+            { label: 'Edit Page', path: '/pages/edit' }
           ]}/>
           <section className="flex-1 relative z-0 overflow-y-auto focus:outline-none p-5">
             {/* Start main area*/}

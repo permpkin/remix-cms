@@ -8,6 +8,7 @@ import { useLoaderData, useNavigate } from "@remix-run/react";
 import type { Product } from "@prisma/client";
 
 import { db } from "~/utils/db.server";
+import { Button } from "~/components/admin/Button";
 
 type LoaderData = { products: Array<Product> };
 
@@ -34,13 +35,9 @@ export default function AdminPage() {
         { label: 'Store', path: '/store' },
         { label: 'Products', path: '/store/products' }
       ]}>
-        <button
-          type="button"
-          onClick={addNew}
-          className="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-        >
+        <Button onClick={addNew}>
           Add Product
-        </button>
+        </Button>
       </PageHeading>
       <Table
         columns={[

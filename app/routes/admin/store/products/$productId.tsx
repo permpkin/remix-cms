@@ -35,8 +35,9 @@ export default function AdminPage() {
       <div className="flex-1 relative z-0 flex overflow-hidden">
         <div className="flex-1">
           <PageHeading crumbs={[
-            { label: 'Pages', path: '/pages' },
-            { label: 'New Page', path: '/pages/new' }
+            { label: 'Store', path: '/store' },
+            { label: 'Products', path: '/store/products' },
+            { label: 'Edit Product', path: '/store/products/edit' }
           ]}/>
           <section className="flex-1 relative z-0 overflow-y-auto focus:outline-none p-5">
             {/* Start main area*/}
@@ -76,7 +77,7 @@ export default function AdminPage() {
             </div>
             <div className="mt-3">
               {/* <TextField label={"Page Title"}/> */}
-              <SlugField label="Page Title" placeholder="Page Title"/>
+              <SlugField label="Page Title" placeholder="Product Title"/>
             </div>
             <div className="mt-3">
               <TextAreaField label="Page Description" description="Leave empty to use site default description."/>

@@ -92,7 +92,7 @@ export default function AdminIndexPage() {
               </div>
             </div>
           </div>
-          <div className="flex-1 relative z-0 flex flex-col pt-5 overflow-hidden dark-mode:bg-gray-800">
+          <div className="flex-1 relative z-0 flex flex-col overflow-hidden dark-mode:bg-gray-800">
             <Outlet />
           </div>
         </div>

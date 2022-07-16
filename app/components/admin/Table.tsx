@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react'
 import { useEffect, useRef, useState } from 'react'
 import { classNames } from '~/utils'
 
@@ -38,10 +39,10 @@ export const Table = ({ columns, data }:Props) => {
   }
 
   return (
-    <div className="mt-8 flex flex-col">
-      <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-          <div className="relative overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <div className="flex flex-col">
+      <div className="overflow-x-auto">
+        <div className="inline-block min-w-full align-middle">
+          <div className="relative overflow-hidden">
             {selectedRow.length > 0 && (
               <div className="absolute top-0 left-12 flex h-12 items-center space-x-3 bg-gray-50 sm:left-16">
                 <button
@@ -117,9 +118,9 @@ export const Table = ({ columns, data }:Props) => {
                       )
                     }
                     <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <a href="#" className="text-gray-600 hover:text-gray-900">
+                      <Link to={`./${item.id}`} className="text-gray-600 hover:text-gray-900">
                         Edit
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 ))}

@@ -47,40 +47,42 @@ export default function AdminPage() {
 
   const { config } = useLoaderData<LoaderData>();
 
-  console.log(config)
-
   return (
     <PageWrapper>
-      <PageHeading title='Settings'/>
-      {
-        settingsLayout.map((section) =>
-          <div className="mt-10 divide-y divide-gray-200">
-            <div className="space-y-1">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">{section.label}</h3>
-              <p className="max-w-2xl text-sm text-gray-500">
-                {section.description}
-              </p>
+      <PageHeading crumbs={[
+        { label: 'Settings', path: '/settings' }
+      ]}/>
+      <div className='px-5'>
+        {
+          settingsLayout.map((section, index) =>
+            <div key={`section-${index}`} className="mt-6 divide-y divide-gray-200">
+              <div className="space-y-1">
+                <h3 className="text-lg leading-6 font-medium text-gray-900">{section.label}</h3>
+                <p className="max-w-2xl text-sm text-gray-500">
+                  {section.description}
+                </p>
+              </div>
+              <div className="mt-6">
+                <dl className="divide-y divide-gray-200">
+                  {
+                    section.fields.map((field, fieldIndex) => (
+                      <div className={classNames(
+                        `py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ${
+                          (fieldIndex > 0) ?
+                            (fieldIndex === section.fields.length ? 'sm:border-b sm:border-gray-200' : 'sm:pt-5')
+                            : ''
+                          }`
+                      )}>
+                        <SettingsField {...field} value={config[field.key] || false}/>
+                      </div>
+                    ))
+                  }
+                </dl>
+              </div>
             </div>
-            <div className="mt-6">
-              <dl className="divide-y divide-gray-200">
-                {
-                  section.fields.map((field, fieldIndex) => (
-                    <div className={classNames(
-                      `py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ${
-                        (fieldIndex > 0) ?
-                          (fieldIndex === section.fields.length ? 'sm:border-b sm:border-gray-200' : 'sm:pt-5')
-                          : ''
-                        }`
-                    )}>
-                      <SettingsField {...field} value={config[field.key] || false}/>
-                    </div>
-                  ))
-                }
-              </dl>
-            </div>
-          </div>
-        )
-      }
+          )
+        }
+      </div>
     </PageWrapper>
   );
 }

@@ -1,42 +1,39 @@
 import { PageHeading } from "~/components/admin/PageHeading";
 import { PageWrapper } from "~/components/admin/PageWrapper";
-import { Table } from "~/components/admin/Table";
 
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import type { Customer, Order, Product } from "@prisma/client";
-
-import { db } from "~/utils/db.server";
-import { ArrowSmDownIcon, ArrowSmUpIcon, UsersIcon } from "@heroicons/react/outline";
-import { CursorClickIcon, MailOpenIcon } from "@heroicons/react/solid";
+import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/solid'
+import { CursorClickIcon, MailOpenIcon, UsersIcon } from '@heroicons/react/outline'
 import { classNames } from "~/utils";
 
-type LoaderData = { products: Array<Product>, customers: Array<Customer>, orders: Array<Order> };
+const stats = [
+  { id: 1, name: 'Total Subscribers', stat: '71,897', icon: UsersIcon, change: '122', changeType: 'increase' },
+  { id: 2, name: 'Avg. Open Rate', stat: '58.16%', icon: MailOpenIcon, change: '5.4%', changeType: 'increase' },
+  { id: 3, name: 'Avg. Click Rate', stat: '24.57%', icon: CursorClickIcon, change: '3.2%', changeType: 'decrease' },
+]
 
-export const loader: LoaderFunction = async () => {
-  const data: LoaderData = {
-    products: await db.product.findMany(),
-    customers: await db.customer.findMany(),
-    orders: await db.order.findMany()
-  };
-  return json(data);
-};
+// import type { LoaderFunction } from "@remix-run/node";
+// import { json } from "@remix-run/node";
+// import { useLoaderData, useNavigate } from "@remix-run/react";
+// import type { User } from "@prisma/client";
+
+// import { db } from "~/utils/db.server";
+// import { Button } from "~/components/admin/Button";
+
+// type LoaderData = { users: Array<User> };
+
+// export const loader: LoaderFunction = async () => {
+//   const data: LoaderData = {
+//     users: await db.user.findMany(),
+//   };
+//   return json(data);
+// };
 
 export default function AdminPage() {
-
-  const { products, customers, orders } = useLoaderData<LoaderData>();
-
-  const stats = [
-    { id: 1, name: 'Total Customers', stat: products.length, icon: UsersIcon, change: '122', changeType: 'increase' },
-    { id: 2, name: 'Total Orders', stat: customers.length, icon: MailOpenIcon, change: '5.4%', changeType: 'increase' },
-    { id: 3, name: 'Revenue', stat: orders.length, icon: CursorClickIcon, change: '3.2%', changeType: 'decrease' },
-  ]
 
   return (
     <PageWrapper>
       <PageHeading crumbs={[
-        { label: 'Store', path: '/store' }
+        { label: 'Dashboard', path: '/' }
       ]}/>
       <div className="px-5">
 
