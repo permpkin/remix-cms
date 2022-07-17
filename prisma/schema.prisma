@@ -52,8 +52,15 @@ model Password {
 model Page {
   id    String @id @default(cuid())
   title String
-  body  String
+  slug String
 
+  status String
+  description String
+  
+  schema String
+  blocks String
+
+  publishedAt DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
