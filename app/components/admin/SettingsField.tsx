@@ -46,7 +46,7 @@ export const SettingsField = ({ label, description, type, value }:Props) => {
             ) : (
               <button
                 type="button"
-                className="bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                className="bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 hover:underline focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
               >
                 Edit
               </button>

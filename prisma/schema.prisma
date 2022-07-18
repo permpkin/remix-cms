@@ -57,10 +57,10 @@ model Page {
   status String
   description String
   
-  schema String
+  schema String?
   blocks String
 
-  publishedAt DateTime
+  publishAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

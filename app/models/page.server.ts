@@ -22,9 +22,9 @@ export function accessPage({
   });
 }
 
-export function createPage(data: Page) {
+export function createPage(pagedata: Page) {
   return prisma.page.create({
-    data
+    data: pagedata
   });
 }
 

@@ -118,7 +118,7 @@ export const Table = ({ columns, data }:Props) => {
                       )
                     }
                     <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <Link to={`./${item.id}`} className="text-gray-600 hover:text-gray-900">
+                      <Link to={`./${item.id}`} className="text-indigo-600 hover:text-indigo-900 hover:underline">
                         Edit
                       </Link>
                     </td>

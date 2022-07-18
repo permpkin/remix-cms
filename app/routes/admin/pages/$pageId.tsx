@@ -29,14 +29,18 @@ type LoaderData = { page: Page };
 // };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+
   // const userId = await requireUserId(request); // is this the session check?
   invariant(params.pageId, "pageId not found");
 
   const page = await getPage({ id: params.pageId });
+
   if (!page) {
     throw new Response("Not Found", { status: 404 });
   }
+
   return json<LoaderData>({ page });
+
 };
 
 const statuses = [
@@ -62,7 +66,7 @@ export default function AdminPage() {
         <div className="flex-1">
           <PageHeading crumbs={[
             { label: 'Pages', path: '/pages' },
-            { label: `${page.title}`, path: `/pages/${page.id}` }
+            { label: `${page.title || "Untitled"}`, path: `/pages/${page.id}` }
           ]}/>
           <section className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
             {/* Start main area*/}
@@ -97,7 +101,7 @@ export default function AdminPage() {
                           {({ active }) => (
                             <button
                               className={`${
-                                active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                                active ? 'bg-indigo-500 text-white' : 'text-gray-900'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               {item}
@@ -129,7 +133,7 @@ export default function AdminPage() {
               <SelectField/>
             </div>
             <div className="mt-3">
-              <TextField label="Schema Type" description="define schema.org type definition." value={page.schema}/>
+              <TextField label="Schema Type" description="define schema.org type definition." value={page.schema || undefined}/>
             </div>
           </div>
           {/* End secondary column */}

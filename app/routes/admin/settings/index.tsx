@@ -35,6 +35,14 @@ const settingsLayout = [
     ]
   },
   {
+    label: 'Defaults',
+    description: 'Default states for various items',
+    fields: [
+      { label: 'Landing/Home Page', key: 'home_page', type: 'text' },
+      { label: 'Store Page', key: 'store_page', type: 'text' }
+    ]
+  },
+  {
     label: 'Visibility',
     description: 'Public Visibility',
     fields: [
@@ -66,7 +74,7 @@ export default function AdminPage() {
                 <dl className="divide-y divide-gray-200">
                   {
                     section.fields.map((field, fieldIndex) => (
-                      <div className={classNames(
+                      <div key={`section-${index}-${fieldIndex}`} className={classNames(
                         `py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 ${
                           (fieldIndex > 0) ?
                             (fieldIndex === section.fields.length ? 'sm:border-b sm:border-gray-200' : 'sm:pt-5')
