@@ -1,4 +1,6 @@
 import {
+  ChevronDownIcon,
+  ChevronRightIcon,
   CogIcon,
   DocumentTextIcon,
   HomeIcon,
@@ -57,13 +59,13 @@ export const SideBar = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 dark-mode:border-gray-900 bg-gray-100 dark-mode:bg-gray-900">
+      <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-gray-100">
         <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
           <div className="flex-shrink-0 flex items-center px-4">
             <BrandLogo/>
           </div>
           <nav aria-label="Sidebar" className="mt-5">
-            <div className="px-2 space-y-1">
+            <div className="space-y-1">
               {navigation.map((item) => (
                 <div key={item.name}>
                   <>
@@ -71,25 +73,36 @@ export const SideBar = () => {
                       to={`${config.ADMIN_URL}${item.href}`}
                       className={classNames(
                         item.active
-                          ? `bg-gray-800 text-gray-100 ${item.children?.length ? 'rounded-b-none' : ''}`
+                          ? `bg-indigo-600 text-indigo-50`
                           : (
                             item.activeChild ?
-                            'bg-gray-300 dark-mode:bg-gray-800 text-gray-600 hover:bg-gray-400 dark-mode:hover:bg-gray-700 hover:text-gray-800 dark-mode:hover:text-gray-400 rounded-b-none' :
-                            'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark-mode:hover:bg-gray-700 dark-mode:text-gray-400 dark-mode:hover:text-gray-200'
+                            'bg-gray-300 text-gray-600 hover:bg-gray-400 hover:text-gray-800 dark-mode:hover:text-gray-400' :
+                            'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark-mode:text-gray-400 dark-mode:hover:text-gray-200'
                           ),
-                        'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                        'group flex items-center justify-between px-3 py-2 text-xs font-medium'
                       )}
                     >
-                      <item.icon
-                        className={classNames(
-                          item.active ? 'text-gray-300' : 'text-gray-600 group-hover:text-gray-800 dark-mode:group-hover:text-gray-400 dark-mode:text-gray-400 dark-mode:hover:text-gray-200',
-                          'mr-4 h-6 w-6'
-                        )}
-                        aria-hidden="true"
-                      />
+                      <span className='flex items-center'>
+                        <item.icon
+                          className={classNames(
+                            item.active ? 'text-gray-300' : 'text-gray-600 group-hover:text-gray-800 dark-mode:group-hover:text-gray-400 dark-mode:text-gray-400 dark-mode:hover:text-gray-200',
+                            'mr-2 h-5 w-5'
+                          )}
+                          aria-hidden="true"
+                        />
                       {item.name}
+                      </span>
+                      {
+                        item.children && (
+                          item.active || item.activeChild ? (
+                            <ChevronDownIcon className='w-3 h-3'/>
+                          ) : (
+                            <ChevronRightIcon className='w-3 h-3'/>
+                          )
+                        )
+                      }
                     </Link>
-                    <div className='rounded-b-md bg-white dark-mode:bg-gray-800 overflow-hidden'>
+                    <div className='bg-white dark-mode:bg-gray-800 overflow-hidden'>
                       {
                         (item.active || item.activeChild) && item.children?.map((child) => (
                           <Link
@@ -97,9 +110,10 @@ export const SideBar = () => {
                             to={`${config.ADMIN_URL}${child.href}`}
                             className={classNames(
                               child.active
-                                ? 'bg-gray-800 text-gray-100'
-                                : 'text-gray-600 hover:bg-gray-50 dark-mode:hover:bg-gray-700 hover:text-gray-900 dark-mode:hover:text-gray-400',
-                              'group flex items-center px-2 py-2 text-sm font-medium rounded-none'
+                              ? 'bg-indigo-600 text-indigo-50'
+                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark-mode:hover:text-gray-400',
+                              'group flex items-center px-1 py-2 text-xs font-medium',
+                              'pl-9'
                             )}
                           >
                             {child.name}

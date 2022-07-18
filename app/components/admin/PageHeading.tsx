@@ -18,7 +18,7 @@ export const PageHeading = ({ crumbs, children }:Props) => {
               { index > 0 && <span className='text-gray-400 mx-3'>/</span> }
               {
                 index === (crumbs.length-1) ? (
-                  <h1 className="text-md font-semibold text-gray-900 dark-mode:text-gray-100">{crumb.label}</h1>
+                  <h1 className="text-md font-semibold text-indigo-600 dark-mode:text-gray-100">{crumb.label}</h1>
                 ) : (
                   <Link to={`/admin${crumb.path}`} className="text-md font-semibold text-gray-900 dark-mode:text-gray-100 hover:text-gray-500">{crumb.label}</Link>
                 )

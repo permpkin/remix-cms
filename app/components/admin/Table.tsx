@@ -85,14 +85,14 @@ export const Table = ({ columns, data }:Props) => {
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
                 {data.map((item, index) => (
-                  <tr key={index} className={selectedRow.includes(item) ? 'bg-gray-50' : undefined}>
+                  <tr key={index} className={selectedRow.includes(item) ? 'bg-indigo-50' : undefined}>
                     <td className="relative w-12 px-6 sm:w-16 sm:px-8">
                       {selectedRow.includes(item) && (
-                        <div className="absolute inset-y-0 left-0 w-0.5 bg-gray-600" />
+                        <div className="absolute inset-y-0 left-0 w-0.5 bg-indigo-600" />
                       )}
                       <input
                         type="checkbox"
-                        className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-gray-600 focus:ring-gray-500 sm:left-6"
+                        className="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-indigo-300 text-indigo-600 focus:ring-gray-500 sm:left-6"
                         value={item.email}
                         checked={selectedRow.includes(item)}
                         onChange={(e) =>

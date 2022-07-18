@@ -1,19 +1,19 @@
-import { CalendarIcon, CheckIcon, EyeIcon } from "@heroicons/react/outline";
+import { CalendarIcon, CheckIcon, ExternalLinkIcon, EyeIcon } from "@heroicons/react/outline";
 import invariant from "tiny-invariant";
 import { BlockEditor } from "~/components/admin/BlockEditor";
-import { Button } from "~/components/admin/Button";
 import { PageHeading } from "~/components/admin/PageHeading";
 import { PageWrapper } from "~/components/admin/PageWrapper";
-import { Table } from "~/components/admin/Table";
 import { SelectField } from "~/components/forms/SelectField";
 import { SlugField } from "~/components/forms/SlugField";
 import { TextAreaField } from "~/components/forms/TextAreaField";
 import { TextField } from "~/components/forms/TextField";
 import { getPage } from "~/models/page.server";
 
+import { Menu, Transition } from '@headlessui/react'
+
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import type { Page } from "@prisma/client";
 import { useState } from "react";
 
@@ -39,12 +39,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json<LoaderData>({ page });
 };
 
+const statuses = [
+  'Draft',
+  'Scheduled',
+  'Published',
+  'Private'
+]
 
 export default function AdminPage() {
 
   const { page } = useLoaderData<LoaderData>();
 
   const [blocks, setBlocks] = useState(JSON.parse(page.blocks))
+
+  const [status, setStatus] = useState(page.status || statuses[0])
 
   console.log('page', page)
 
@@ -66,27 +74,45 @@ export default function AdminPage() {
           {/* Start secondary column (hidden on smaller screens) */}
           <div className="flex-grow">
             <div>
-              <div className="relative z-0 inline-flex shadow-sm rounded-md sm:shadow-none sm:space-x-3 w-full">
+              <div className="relative inline-flex shadow-sm rounded-md sm:shadow-none sm:space-x-3 w-full">
                 <span className="inline-flex sm:shadow-sm w-full">
+                  <Link
+                    to={`/${page.slug}`}
+                    className="relative inline-flex flex-1 items-center justify-center px-4 py-1 rounded-l-md border border-gray-300 bg-white text-xs font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600"
+                  >
+                    <ExternalLinkIcon className="mr-1 h-4 w-4 text-gray-400" aria-hidden="true" />
+                    <span>Preview</span>
+                  </Link>
+                  <Menu as="div" className="relative inline-block text-left">
+                    <Menu.Button className='hidden sm:inline-flex flex-1 -ml-px relative items-center justify-center px-4 py-1 border border-gray-300 bg-white text-xs font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600'>
+                      <EyeIcon className="mr-1 h-4 w-4 text-gray-400" aria-hidden="true" />
+                      <span>{page.status}</span>
+                    </Menu.Button>
+                    <Menu.Items className="absolute z-10 left-0 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="px-1 py-1 ">
+                      {statuses.map((item, index) => (
+                        <Menu.Item
+                          key={`${index}-${item}`}
+                        >
+                          {({ active }) => (
+                            <button
+                              className={`${
+                                active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            >
+                              {item}
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ))}
+                      </div>
+                    </Menu.Items>
+                  </Menu>
                   <button
                     type="button"
-                    className="relative inline-flex flex-1 items-center justify-center px-4 py-1 rounded-l-md border border-gray-300 bg-white text-xs font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"
+                    className="relative inline-flex flex-1 items-center justify-center px-4 py-1 rounded-r-md border border-indigo-600 bg-indigo-500 hover:bg-indigo-600 text-xs font-medium text-indigo-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-600 focus:border-indigo-600"
                   >
-                    <EyeIcon className="mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-                    <span>{page.status}</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="hidden sm:inline-flex flex-1 -ml-px relative items-center justify-center px-4 py-1 border border-gray-300 bg-white text-xs font-medium text-gray-900 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-600 focus:border-blue-600"
-                  >
-                    <CalendarIcon className="mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-                    <span>Schedule</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="relative inline-flex flex-1 items-center justify-center px-4 py-1 rounded-r-md border border-green-600 bg-green-500 hover:bg-green-600 text-xs font-medium text-green-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-green-600 focus:border-green-600"
-                  >
-                    <CheckIcon className="mr-1 h-5 w-5 text-green-50" aria-hidden="true" />
+                    <CheckIcon className="mr-1 h-4 w-4 text-indigo-50" aria-hidden="true" />
                     <span>Save</span>
                   </button>
                 </span>

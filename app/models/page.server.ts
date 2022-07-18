@@ -13,6 +13,15 @@ export function getPage({
   });
 }
 
+export function accessPage({
+  slug
+}: Pick<Page, "slug">) {
+  return prisma.page.findFirst({
+    // get matching slug and where published.
+    where: { slug, status: "Published" }
+  });
+}
+
 export function createPage(data: Page) {
   return prisma.page.create({
     data
